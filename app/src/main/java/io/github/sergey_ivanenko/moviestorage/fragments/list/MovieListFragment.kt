@@ -30,7 +30,7 @@ class MovieListFragment : Fragment() {
 
         setupRecyclerView()
 
-        movieViewModel.getAllMovies.observe(viewLifecycleOwner, Observer { movies ->
+        movieViewModel.getAllMovies?.observe(viewLifecycleOwner, Observer { movies ->
             adapter.movies = movies
         })
 

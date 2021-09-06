@@ -13,6 +13,9 @@ abstract class MovieDatabase: RoomDatabase() {/*movies_storage*/
     abstract fun movieDao(): MovieDao
 
     companion object {
+        const val DB_VERSION = 1
+    }
+    /*companion object {
         @Volatile
         private var INSTANCE: MovieDatabase? = null
 
@@ -34,5 +37,5 @@ abstract class MovieDatabase: RoomDatabase() {/*movies_storage*/
 
         const val DB_VERSION = 1
         private const val DB_NAME = "movies_storage"
-    }
+    }*/
 }
