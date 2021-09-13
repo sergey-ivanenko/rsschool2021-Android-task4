@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.github.sergey_ivanenko.moviestorage.R
 import io.github.sergey_ivanenko.moviestorage.data.viewmodel.MovieViewModel
@@ -30,13 +30,19 @@ class MovieListFragment : Fragment() {
 
         setupRecyclerView()
 
-        movieViewModel.getAllMovies?.observe(viewLifecycleOwner, Observer { movies ->
+        /*movieViewModel.getAllMovies.observe(viewLifecycleOwner, Observer { movies ->
             adapter.movies = movies
-        })
+        })*/
 
         binding.addNewMovieButton.setOnClickListener {
             findNavController().navigate(R.id.action_movieListFragment_to_addMovieFragment)
         }
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val sortBy = prefs.getString("sortBy", "") ?: "id"
+        val isUseCursor = prefs.getBoolean("cursor", false)
+
+        sortMovies(sortBy)
 
         setHasOptionsMenu(true)
 
@@ -47,11 +53,24 @@ class MovieListFragment : Fragment() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
-        SwipeHelper { movieViewModel.deleteMovie(it)}.attachToRecyclerView(recyclerView)
+        SwipeHelper { movieViewModel.deleteMovie(it) }.attachToRecyclerView(recyclerView)
+    }
+
+    private fun sortMovies(sortBy: String) {
+        movieViewModel.sortBySettings(sortBy).observe(viewLifecycleOwner, { movies ->
+            adapter.movies = movies
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movie_list_fragment_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_sortBy) {
+            findNavController().navigate(R.id.open_settingsFragment)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

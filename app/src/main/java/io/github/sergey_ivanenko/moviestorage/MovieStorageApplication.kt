@@ -1,7 +1,6 @@
 package io.github.sergey_ivanenko.moviestorage
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import io.github.sergey_ivanenko.moviestorage.data.dao.MovieDatabase
 
@@ -19,35 +18,12 @@ class MovieStorageApplication: Application() {
         ).build()
     }
 
-    fun getDatabase(): MovieDatabase? {
-        return database
-    }
-
     companion object {
+        fun getDatabase(): MovieDatabase {
+            return INSTANCE?.database as MovieDatabase
+        }
 
         private var INSTANCE: MovieStorageApplication? = null
         private const val DB_NAME = "movies_storage"
     }
-
-    /*
-    public static App instance;
-
-    private AppDatabase database;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        instance = this;
-        database = Room.databaseBuilder(this, AppDatabase.class, "database")
-                .build();
-    }
-
-    public static App getInstance() {
-        return instance;
-    }
-
-    public AppDatabase getDatabase() {
-        return database;
-    }
-     */
 }

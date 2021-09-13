@@ -18,4 +18,11 @@ interface MovieDao {
 
     @Delete
     suspend fun deleteMovie(movie: Movie)
+
+    @Query("SELECT * FROM ${Movie.TABLE_NAME} ORDER BY CASE " +
+            "WHEN :sortBy = 'id' THEN id " +
+            "WHEN :sortBy = 'title' THEN title " +
+            "WHEN :sortBy = 'year' THEN year " +
+            "WHEN :sortBy = 'genre' THEN genre END")
+    fun sortBySettings(sortBy: String): LiveData<List<Movie>>
 }

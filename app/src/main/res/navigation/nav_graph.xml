@@ -14,9 +14,6 @@
             android:id="@+id/action_movieListFragment_to_addMovieFragment"
             app:destination="@id/addMovieFragment" />
         <action
-            android:id="@+id/action_movieListFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-        <action
             android:id="@+id/action_movieListFragment_to_updateMovieFragment"
             app:destination="@id/updateMovieFragment" />
     </fragment>
@@ -32,23 +29,27 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="io.github.sergey_ivanenko.moviestorage.fragments.settings.SettingsFragment"
-        android:label="Sort by"
-        tools:layout="@layout/fragment_settings" >
-        <action
-            android:id="@+id/action_settingsFragment_to_movieListFragment"
-            app:destination="@id/movieListFragment"
-            app:popUpTo="@id/movieListFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
         android:id="@+id/updateMovieFragment"
         android:name="io.github.sergey_ivanenko.moviestorage.fragments.update.UpdateMovieFragment"
         android:label="Update Movie"
         tools:layout="@layout/fragment_update_movie" >
         <action
             android:id="@+id/action_updateMovieFragment_to_movieListFragment"
-            app:destination="@id/movieListFragment" />
+            app:destination="@id/movieListFragment"
+            app:popUpTo="@id/movieListFragment"
+            app:popUpToInclusive="true" />
     </fragment>
+
+    <!--Settings fragment-->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="io.github.sergey_ivanenko.moviestorage.fragments.settings.SettingsFragment"
+        android:label="Sort by"
+        tools:layout="@layout/fragment_settings" >
+    </fragment>
+    <!--Global action-->
+    <action
+        android:id="@+id/open_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:popUpTo="@id/movieListFragment" />
 </navigation>
