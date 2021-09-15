@@ -24,8 +24,8 @@ class MovieViewModel : ViewModel() {
 
     val getAllMovies: LiveData<List<Movie>> = movieRepository.getAllMovies()
 
-    fun changeMovieDataSource(isUseCursor: Boolean = false) {
-        if (!isUseCursor) {
+    fun changeMovieDataSource(isUseCursor: Boolean? = false) {
+        if (isUseCursor == null || !isUseCursor) {
             movieRoomDataSource = MovieRoomDataSourceImpl()
             movieRepository = MovieRepository(movieRoomDataSource as MovieRoomDataSourceImpl)
         } else {

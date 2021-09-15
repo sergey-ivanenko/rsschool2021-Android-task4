@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import io.github.sergey_ivanenko.moviestorage.data.model.Movie
 
 class MovieRepository(
-    private val movieRoomDataSource: MovieDataSource/*,
-    private val movieSQLiteDataSource: MovieSQLiteDataSource*/
+    private val movieRoomDataSource: MovieDataSource
 ) {
 
     fun getAllMovies(): LiveData<List<Movie>> = movieRoomDataSource.getAllMovies()

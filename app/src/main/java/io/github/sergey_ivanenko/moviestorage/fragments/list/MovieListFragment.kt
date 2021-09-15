@@ -1,5 +1,6 @@
 package io.github.sergey_ivanenko.moviestorage.fragments.list
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -39,8 +40,8 @@ class MovieListFragment : Fragment() {
         }
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val sortBy = prefs.getString("sortBy", "") ?: "id"
-        val isUseCursor = prefs.getBoolean("cursor", false)
+        val sortBy = prefs?.getString("sortBy", "id") ?: "id"
+        val isUseCursor = prefs?.getBoolean("cursor", false)
 
         movieViewModel.changeMovieDataSource(isUseCursor)
 

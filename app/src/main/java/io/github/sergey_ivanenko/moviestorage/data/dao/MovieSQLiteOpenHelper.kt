@@ -39,15 +39,6 @@ class MovieSQLiteOpenHelper(context: Context) : SQLiteOpenHelper(
     }
 
     fun getAllMovies(): LiveData<List<Movie>> {
-        /*val stringQuery = "SELECT * FROM $TABLE_NAME"
-        val cursor = readableDatabase.rawQuery(stringQuery, null)
-        cursor.use { it ->
-            if (it.moveToFirst()) {
-                do {
-                    val title = it.getString(it.getColumnIndex(TITLE_COLUMN))
-                } while (it.moveToNext())
-            }
-        }*/
         val listOfMovies = mutableListOf<Movie>()
         getCursorWithMovies().use { cursor ->
             if (cursor.moveToFirst()) {
@@ -97,18 +88,13 @@ class MovieSQLiteOpenHelper(context: Context) : SQLiteOpenHelper(
         val db: SQLiteDatabase = this.writableDatabase
         val selection = "$ID_COLUMN = ?"
         val selectionArgs = arrayOf(movie.id.toString())
-        val deletedRows = db.delete(TABLE_NAME, selection, selectionArgs)
+        db.delete(TABLE_NAME, selection, selectionArgs)
 
         db.close()
     }
 
     fun sortBySettings(sortBy: String): LiveData<List<Movie>> {
         val listOfMovies = mutableListOf<Movie>()
-        /*val sortByQuery = "SELECT * FROM ${Movie.TABLE_NAME} ORDER BY CASE " +
-                "WHEN :sortBy = 'id' THEN id " +
-                "WHEN :sortBy = 'title' THEN title " +
-                "WHEN :sortBy = 'year' THEN year " +
-                "WHEN :sortBy = 'genre' THEN genre END"*/
         val sortByQuery = "SELECT * FROM ${Movie.TABLE_NAME} ORDER BY $sortBy"
 
         val cursor = readableDatabase.rawQuery(sortByQuery, null)
