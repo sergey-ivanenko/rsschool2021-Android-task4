@@ -1,5 +1,6 @@
 package io.github.sergey_ivanenko.moviestorage.fragments.list.adapter
 
+import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import io.github.sergey_ivanenko.moviestorage.data.model.Movie

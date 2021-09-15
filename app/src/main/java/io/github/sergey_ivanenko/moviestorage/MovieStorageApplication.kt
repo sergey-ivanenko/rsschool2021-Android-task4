@@ -2,25 +2,32 @@ package io.github.sergey_ivanenko.moviestorage
 
 import android.app.Application
 import androidx.room.Room
-import io.github.sergey_ivanenko.moviestorage.data.dao.MovieDatabase
+import io.github.sergey_ivanenko.moviestorage.data.dao.MovieSQLiteOpenHelper
+import io.github.sergey_ivanenko.moviestorage.data.dao.RoomMovieDatabase
 
 class MovieStorageApplication: Application() {
 
-    private var database: MovieDatabase? = null
+    private var roomDatabase: RoomMovieDatabase? = null
+    private var sqliteDatabase: MovieSQLiteOpenHelper? = null
 
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-        database = Room.databaseBuilder(
+        roomDatabase = Room.databaseBuilder(
             this.applicationContext,
-            MovieDatabase::class.java,
+            RoomMovieDatabase::class.java,
             DB_NAME
         ).build()
+        sqliteDatabase = MovieSQLiteOpenHelper(this)
     }
 
     companion object {
-        fun getDatabase(): MovieDatabase {
-            return INSTANCE?.database as MovieDatabase
+        fun getRoomDatabase(): RoomMovieDatabase {
+            return INSTANCE?.roomDatabase as RoomMovieDatabase
+        }
+
+        fun getSQLiteDatabase(): MovieSQLiteOpenHelper {
+            return INSTANCE?.sqliteDatabase as MovieSQLiteOpenHelper
         }
 
         private var INSTANCE: MovieStorageApplication? = null

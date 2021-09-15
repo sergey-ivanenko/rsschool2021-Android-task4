@@ -42,6 +42,8 @@ class MovieListFragment : Fragment() {
         val sortBy = prefs.getString("sortBy", "") ?: "id"
         val isUseCursor = prefs.getBoolean("cursor", false)
 
+        movieViewModel.changeMovieDataSource(isUseCursor)
+
         sortMovies(sortBy)
 
         setHasOptionsMenu(true)
